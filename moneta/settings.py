@@ -37,7 +37,7 @@ THIRD_PARTY_APPS = [
 
 # Add in-house project apps here
 PROJECT_APPS = [
-
+    'users',
 ]
 
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + PROJECT_APPS
@@ -137,6 +137,9 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+AUTH_USER_MODEL = "users.User"
+
 # CORS CONFIG #
 CORS_ORIGIN_ALLOW_ALL = True
 CORS_ALLOW_METHODS = (
