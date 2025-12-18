@@ -3,6 +3,10 @@ from django.utils import timezone
 from django.contrib.auth.models import AbstractUser
 from django.contrib.auth.base_user import BaseUserManager
 
+from applibs.logger import get_logger
+
+logger = get_logger(__name__)
+
 class UserManager(BaseUserManager):
     def create_user(self, email, password, **extra_fields):
         email = self.normalize_email(email)
@@ -10,7 +14,8 @@ class UserManager(BaseUserManager):
         user = self.model(email=email, **extra_fields)
         user.set_password(password)
         user.save()
-        
+
+        logger.info("New user created successfully.")
         return user
     
     def create_superuser(self, email, password, **extra_fields):
@@ -46,5 +51,5 @@ class User(AbstractUser):
     def profile_response_data(self) -> dict:
         return {
             "username": self.username,
-            "joining_date": self.date_joined
+            "joining_date": self.date_joined.strftime("%Y-%m-%d %H:%M:%S")
         }

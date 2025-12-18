@@ -23,6 +23,13 @@ USER_ALREADY_EXISTS = {
     "lang": "en",
 }
 
+INVALID_EMAIL_FORMAT = {
+    "code": "MONETA_IEF_4003",
+    "message": "The provided email is not in valid format.",
+    "lang": "en",
+}
+
 VALIDATION_ERROR_DICT = {
-    "UAE_403": USER_ALREADY_EXISTS
+    "UAE_403": USER_ALREADY_EXISTS,
+    "IEF_403": INVALID_EMAIL_FORMAT,
 }
