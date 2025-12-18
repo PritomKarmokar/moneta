@@ -11,6 +11,6 @@ class SignUpSerializer(serializers.Serializer):
         email = attrs.get('email')
         email_exists = User.objects.filter(email=email).exists()
         if email_exists:
-            raise serializers.ValidationError('An user with this email address already exists.')
+            raise serializers.ValidationError(detail='An user with this email address already exists.', code='UAE_403')
 
         return attrs

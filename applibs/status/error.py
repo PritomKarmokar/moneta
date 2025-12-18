@@ -15,3 +15,14 @@ VALID_DATA_NOT_FOUND = {
     "message": "Valid data not found",
     "lang": "en",
 }
+
+
+USER_ALREADY_EXISTS = {
+    "code": "MONETA_UAE_4003",
+    "message": "An user with this email already exists.",
+    "lang": "en",
+}
+
+VALIDATION_ERROR_DICT = {
+    "UAE_403": USER_ALREADY_EXISTS
+}

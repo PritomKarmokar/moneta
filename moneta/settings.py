@@ -43,6 +43,7 @@ PROJECT_APPS = [
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + PROJECT_APPS
 
 MIDDLEWARE = [
+    'cid.middleware.CidMiddleware',
     'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -164,6 +165,12 @@ CORS_ALLOW_HEADERS = [
     'x-requested-with',
 ]
 # CORS CONFIG END #
+
+# django-correlation-id config
+CID_GENERATE = True
+CID_HEADER = 'HTTP_X_REQUEST_ID'
+CID_RESPONSE_HEADER = 'X-Request-ID'
+# django-correlation-id config end
 
 # LOGGING SETUP START #
 LOG_LEVEL = env.str('LOG_LEVEL', 'DEBUG')
