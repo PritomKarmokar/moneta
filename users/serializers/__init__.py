@@ -1,2 +1,3 @@
-from .login import LoginSerializer
-from .signup import SignUpSerializer
+from .login import *
+from .signup import *
+from .logout import *

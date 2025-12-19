@@ -16,6 +16,11 @@ VALID_DATA_NOT_FOUND = {
     "lang": "en",
 }
 
+VALID_TOKEN_NOT_PROVIDED = {
+    "code": "MONETA_VTNP_400",
+    "message": "Invalid token provided.",
+    "lang": "en",
+}
 
 USER_ALREADY_EXISTS = {
     "code": "MONETA_UAE_400",

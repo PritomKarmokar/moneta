@@ -35,6 +35,7 @@ THIRD_PARTY_APPS = [
     'corsheaders',
     'cid.apps.CidAppConfig',
     'rest_framework_simplejwt',
+    'rest_framework_simplejwt.token_blacklist',
 ]
 
 # Add in-house project apps here
