@@ -15,3 +15,9 @@ LOGOUT_SUCCESSFUL = {
     "message": "Successfully logged out.",
     "lang": "en",
 }
+
+CATEGORY_OBJECT_CREATION_SUCCESSFUL = {
+    "code": "MONETA_COCS_201",
+    "message": "New Category Object Created Successfully",
+    "lang": "en",
+}

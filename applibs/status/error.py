@@ -40,6 +40,12 @@ INVALID_LOGIN_CREDENTIALS = {
     "lang": "en"
 }
 
+CATEGORY_OBJECT_CREATION_FAILED = {
+    "code": "MONETA_COCF_400",
+    "message": "Couldn't create new category object.",
+    "lang": "en"
+}
+
 VALIDATION_ERROR_DICT = {
     "UAE_403": USER_ALREADY_EXISTS,
     "IEF_403": INVALID_EMAIL_FORMAT,
