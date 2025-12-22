@@ -28,6 +28,12 @@ CATEGORY_LIST_FETCH_SUCCESSFUL = {
     "lang": "en",
 }
 
+CATEGORY_OBJECT_UPDATED_SUCCESSFULLY = {
+    "code": "MONETA_COUS_200",
+    "message": "Category Object Updated Successfully",
+    "lang": "en",
+}
+
 NO_CATEGORIES_FOUND = {
     "code": "MONETA_NCF_204",
     "message": "No Categories Found",

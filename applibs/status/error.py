@@ -46,6 +46,13 @@ CATEGORY_OBJECT_CREATION_FAILED = {
     "lang": "en"
 }
 
+
+CATEGORY_OBJECT_UPDATE_FAILED = {
+    "code": "MONETA_COCF_400",
+    "message": "Failed to Update the existing Category.",
+    "lang": "en"
+}
+
 VALIDATION_ERROR_DICT = {
     "UAE_403": USER_ALREADY_EXISTS,
     "IEF_403": INVALID_EMAIL_FORMAT,

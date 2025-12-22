@@ -5,19 +5,31 @@ from expenses.models import Expense, Category
 @admin.register(Category)
 class CategoryAdmin(admin.ModelAdmin):
     list_display = (
-        'id',
-        'name',
-        'user',
+        "id",
+        "name",
+        "user",
     )
+
+    fields = (
+        "id",
+        "name",
+        "user",
+    )
+
+    readonly_fields = ("id",)
+
     search_fields = (
-        'user',
-        'name'
+        "name",
+        "user__email",
+        "user__username",
     )
+
     list_filter = (
-        'user',
-        'name',
+        "user",
+        "name",
     )
-    orderby = ('name',)
+
+    ordering = ("name",)
 
 @admin.register(Expense)
 class ExpenseAdmin(admin.ModelAdmin):
@@ -37,4 +49,4 @@ class ExpenseAdmin(admin.ModelAdmin):
         'user',
         'category',
     )
-    orderby = ('user','category')
+    ordering = ('user','category')

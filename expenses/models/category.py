@@ -3,6 +3,7 @@ from typing import Optional, List
 
 from django.db import models
 from django.conf import settings
+from django.utils import timezone
 from django.db.models import QuerySet
 from django.contrib.auth.base_user import AbstractBaseUser
 
@@ -31,6 +32,19 @@ class CategoryManager(models.Manager):
         categories = self.filter(user=user)
         logger.info(f"Fetching all available categories for username '{user.username}'")
         return categories
+
+    def fetch_category(
+            self,
+            category_id: str,
+            user: AbstractBaseUser
+    ) -> Optional["Category"]:
+        try:
+            category = self.get(id=category_id, user=user)
+            logger.info(f"Category object fetched successfully for user: {user.username} with id: {category_id}")
+            return category
+        except Exception as e:
+            logger.error(f"Error fetching category object: {e}")
+            return None
 
 class Category(models.Model):
     id = models.CharField(max_length=26, primary_key=True, editable=False)
@@ -67,3 +81,20 @@ class Category(models.Model):
             "created_by": self.user.username,
             "created_at": self.created_at.strftime("%Y-%m-%d %H:%M:%S")
         }
+
+    @property
+    def updated_response_data(self) -> dict:
+        return {
+            "updated_name": self.name,
+            "updated_at": self.updated_at.strftime("%Y-%m-%d %H:%M:%S")
+        }
+
+    def update(self, name: str) -> bool:
+        try:
+            self.name = name
+            self.updated_at = timezone.now()
+            self.save()
+            return True
+        except Exception as e:
+            logger.error(f"Error updating category object: {e}")
+            return False

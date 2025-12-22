@@ -18,4 +18,4 @@ class UserAdmin(admin.ModelAdmin):
         'username',
         'email'
     )
-    orderby = ('username',)
+    ordering = ('username',)

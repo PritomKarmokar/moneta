@@ -11,10 +11,15 @@ from applibs.status import (
     VALID_DATA_NOT_FOUND,
     CATEGORY_OBJECT_CREATION_FAILED,
     CATEGORY_LIST_FETCH_SUCCESSFUL,
+    CATEGORY_OBJECT_UPDATE_FAILED,
     NEW_CATEGORY_CREATED_SUCCESSFULLY,
+    CATEGORY_OBJECT_UPDATED_SUCCESSFULLY,
 )
 from expenses.models import Category
-from expenses.serializers import CreateCategorySerializer
+from expenses.serializers import (
+    CreateCategorySerializer,
+    UpdateCategorySerializer
+)
 
 logger = get_logger(__name__)
 
@@ -62,4 +67,31 @@ class CategoryListAPIView(APIView):
         }
         return Response(format_output_success(CATEGORY_LIST_FETCH_SUCCESSFUL, response_dict), status=status.HTTP_200_OK)
 
+
+class UpdateCategoryAPIView(APIView):
+    permission_classes = [IsAuthenticated]
+    serializer_class = UpdateCategorySerializer
+
+    def patch(self, request: Request, category_id: str) -> Response:
+        serializer = self.serializer_class(data=request.data)
+        if not serializer.is_valid():
+            errors = serializer.errors
+            logger.error("Serializer errors: %s", errors)
+            return Response(VALID_DATA_NOT_FOUND, status=status.HTTP_400_BAD_REQUEST)
+
+        serializer_data = serializer.validated_data
+        new_name = serializer_data.get("name")
+
+        user = request.user
+        category_obj = Category.objects.fetch_category(category_id=category_id, user=user)
+        if not category_obj:
+            logger.error("The following category object with id: %s does not exist for user with username %s.", category_id, user.username)
+            return Response(NO_CATEGORIES_FOUND, status=status.HTTP_404_NOT_FOUND)
+
+        is_updated = category_obj.update(name=new_name)
+        if not is_updated:
+            logger.error("Error updating category object with id: %s for user with username %s.", category_id, user.username)
+            return Response(CATEGORY_OBJECT_UPDATE_FAILED, status=status.HTTP_400_BAD_REQUEST)
+
+        return Response(format_output_success(CATEGORY_OBJECT_UPDATED_SUCCESSFULLY, category_obj.updated_response_data), status=status.HTTP_200_OK)
 
