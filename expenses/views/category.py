@@ -9,10 +9,10 @@ from applibs.helper import format_output_success
 from applibs.status import (
     VALID_DATA_NOT_FOUND,
     CATEGORY_OBJECT_CREATION_FAILED,
-    CATEGORY_OBJECT_CREATION_SUCCESSFUL
+    NEW_CATEGORY_CREATED_SUCCESSFULLY
 )
-from expenses.serializers import CreateCategorySerializer
 from expenses.models import Category
+from expenses.serializers import CreateCategorySerializer
 
 logger = get_logger(__name__)
 
@@ -38,4 +38,4 @@ class CreateCategoryAPIView(APIView):
             logger.error("Error creating new category object.")
             return Response(CATEGORY_OBJECT_CREATION_FAILED, status=status.HTTP_400_BAD_REQUEST)
 
-        return Response(format_output_success(CATEGORY_OBJECT_CREATION_SUCCESSFUL, new_category.response_data), status=status.HTTP_201_CREATED)
+        return Response(format_output_success(NEW_CATEGORY_CREATED_SUCCESSFULLY, new_category.response_data), status=status.HTTP_201_CREATED)

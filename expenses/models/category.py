@@ -20,7 +20,7 @@ class CategoryManager(models.Manager):
             logger.info(f"New Category created successfully for user: {user}")
             return db_object
         except Exception as e:
-            logger.error(f"Error creating category: {e}")
+            logger.error(f"Error creating new category object: {e}")
             return None
 
 class Category(models.Model):

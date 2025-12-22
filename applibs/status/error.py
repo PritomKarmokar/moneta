@@ -42,7 +42,7 @@ INVALID_LOGIN_CREDENTIALS = {
 
 CATEGORY_OBJECT_CREATION_FAILED = {
     "code": "MONETA_COCF_400",
-    "message": "Couldn't create new category object.",
+    "message": "Failed to Create New Category.",
     "lang": "en"
 }
 
