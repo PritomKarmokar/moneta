@@ -9,7 +9,8 @@ from applibs.helper import format_output_success
 from applibs.status import (
     VALID_DATA_NOT_FOUND,
     CATEGORY_OBJECT_CREATION_FAILED,
-    NEW_CATEGORY_CREATED_SUCCESSFULLY
+    CATEGORY_LIST_FETCH_SUCCESSFUL,
+    NEW_CATEGORY_CREATED_SUCCESSFULLY,
 )
 from expenses.models import Category
 from expenses.serializers import CreateCategorySerializer
@@ -45,4 +46,19 @@ class CategoryListAPIView(APIView):
     permission_classes = [IsAuthenticated]
 
     def get(self, request: Request) -> Response:
-        pass
+        user = request.user
+        categories = Category.objects.fetch_all_categories(user=user)
+        if len(categories) == 0:
+            logger.info("No categories found for user: %s", user.username)
+            return Response()
+
+        category_list = []
+        for category in categories:
+            category_list.append(category.name)
+
+        response_dict = {
+            "categories": category_list
+        }
+        return Response(format_output_success(CATEGORY_LIST_FETCH_SUCCESSFUL, response_dict), status=status.HTTP_200_OK)
+
+

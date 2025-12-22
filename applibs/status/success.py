@@ -21,3 +21,9 @@ NEW_CATEGORY_CREATED_SUCCESSFULLY = {
     "message": "New Category Object Created Successfully",
     "lang": "en",
 }
+
+CATEGORY_LIST_FETCH_SUCCESSFUL = {
+    "code": "MONETA_CLFS_200",
+    "message": "Category List Fetched Successfully",
+    "lang": "en",
+}

@@ -1,8 +1,9 @@
 import ulid
-from typing import Optional
+from typing import Optional, List
 
 from django.db import models
 from django.conf import settings
+from django.db.models import QuerySet
 from django.contrib.auth.base_user import AbstractBaseUser
 
 from applibs.logger import get_logger
@@ -22,6 +23,14 @@ class CategoryManager(models.Manager):
         except Exception as e:
             logger.error(f"Error creating new category object: {e}")
             return None
+
+    def fetch_all_categories(
+            self,
+            user: AbstractBaseUser
+    ) -> QuerySet["Category"]:
+        categories = self.filter(user=user)
+        logger.info(f"Fetching all available categories for username '{user.username}'")
+        return categories
 
 class Category(models.Model):
     id = models.CharField(max_length=26, primary_key=True, editable=False)
