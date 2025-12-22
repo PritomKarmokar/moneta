@@ -1,3 +1,5 @@
+import ulid
+
 from django.db import models
 from django.utils import timezone
 from django.contrib.auth.models import AbstractUser
@@ -31,6 +33,7 @@ class UserManager(BaseUserManager):
         return self.create_user(email=email, password=password, **extra_fields)
 
 class User(AbstractUser):
+    id = models.CharField(max_length=26, primary_key=True, editable=False)
     email = models.CharField(max_length=255, unique=True)
     username = models.CharField(max_length=50)
     date_joined = models.DateTimeField(default=timezone.now)
@@ -42,7 +45,12 @@ class User(AbstractUser):
 
     def __str__(self) -> str:
         return f"{self.username}"
-    
+
+    def save(self, *args, **kwargs):
+        if not self.id:
+            self.id = ulid.new().__str__()
+        super().save(*args, **kwargs)
+
     class Meta:
         verbose_name = "User"
         db_table = "user"

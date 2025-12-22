@@ -39,3 +39,10 @@ class CreateCategoryAPIView(APIView):
             return Response(CATEGORY_OBJECT_CREATION_FAILED, status=status.HTTP_400_BAD_REQUEST)
 
         return Response(format_output_success(NEW_CATEGORY_CREATED_SUCCESSFULLY, new_category.response_data), status=status.HTTP_201_CREATED)
+
+
+class CategoryListAPIView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request: Request) -> Response:
+        pass
