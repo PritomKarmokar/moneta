@@ -6,6 +6,14 @@ from expenses.models import Expense, Category
 class CategoryAdmin(admin.ModelAdmin):
     list_display = (
         'id',
+        'name',
+        'user',
+    )
+    search_fields = (
+        'user',
+        'name'
+    )
+    list_filter = (
         'user',
         'name',
     )
@@ -20,5 +28,13 @@ class ExpenseAdmin(admin.ModelAdmin):
         'amount',
         'date',
     )
-
-    orderby = ('user',)
+    search_fields = (
+        'id',
+        'user',
+        'category',
+    )
+    list_filter = (
+        'user',
+        'category',
+    )
+    orderby = ('user','category')
