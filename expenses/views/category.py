@@ -7,6 +7,7 @@ from rest_framework.permissions import IsAuthenticated
 from applibs.logger import get_logger
 from applibs.helper import format_output_success
 from applibs.status import (
+    NO_CATEGORIES_FOUND,
     VALID_DATA_NOT_FOUND,
     CATEGORY_OBJECT_CREATION_FAILED,
     CATEGORY_LIST_FETCH_SUCCESSFUL,
@@ -50,7 +51,7 @@ class CategoryListAPIView(APIView):
         categories = Category.objects.fetch_all_categories(user=user)
         if len(categories) == 0:
             logger.info("No categories found for user: %s", user.username)
-            return Response()
+            return Response(format_output_success(NO_CATEGORIES_FOUND), status=status.HTTP_200_OK)
 
         category_list = []
         for category in categories:

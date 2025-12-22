@@ -27,3 +27,9 @@ CATEGORY_LIST_FETCH_SUCCESSFUL = {
     "message": "Category List Fetched Successfully",
     "lang": "en",
 }
+
+NO_CATEGORIES_FOUND = {
+    "code": "MONETA_NCF_204",
+    "message": "No Categories Found",
+    "lang": "en"
+}
