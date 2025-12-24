@@ -9,10 +9,11 @@ from applibs.helper import format_output_success
 from applibs.status import (
     NO_CATEGORIES_FOUND,
     VALID_DATA_NOT_FOUND,
-    CATEGORY_OBJECT_CREATION_FAILED,
-    CATEGORY_LIST_FETCH_SUCCESSFUL,
     CATEGORY_OBJECT_UPDATE_FAILED,
+    CATEGORY_LIST_FETCH_SUCCESSFUL,
+    CATEGORY_OBJECT_CREATION_FAILED,
     NEW_CATEGORY_CREATED_SUCCESSFULLY,
+    CATEGORY_OBJECT_DELETED_SUCCESSFULLY,
     CATEGORY_OBJECT_UPDATED_SUCCESSFULLY,
 )
 from expenses.models import Category
@@ -95,3 +96,16 @@ class UpdateCategoryAPIView(APIView):
 
         return Response(format_output_success(CATEGORY_OBJECT_UPDATED_SUCCESSFULLY, category_obj.updated_response_data), status=status.HTTP_200_OK)
 
+
+class DeleteCategoryAPIView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def delete(self, request: Request, category_id: str) -> Response:
+        user = request.user
+        category_obj = Category.objects.filter(id=category_id, user=user).first()
+        if not category_obj:
+            logger.error(f"Category {category_id} not found for user {user.username}")
+            return Response(NO_CATEGORIES_FOUND, status=status.HTTP_404_NOT_FOUND)
+
+        category_obj.delete()
+        return Response(CATEGORY_OBJECT_DELETED_SUCCESSFULLY, status=status.HTTP_204_NO_CONTENT)

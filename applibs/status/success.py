@@ -39,3 +39,9 @@ NO_CATEGORIES_FOUND = {
     "message": "No Categories Found",
     "lang": "en"
 }
+
+CATEGORY_OBJECT_DELETED_SUCCESSFULLY = {
+    "code": "MONETA_COD_204",
+    "message": "Category Object Deleted Successfully",
+    "lang": "en"
+}
