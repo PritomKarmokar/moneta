@@ -24,6 +24,7 @@ class ExpenseManager(models.Manager):
                 category = payload.get("category"),
                 amount = payload.get("amount"),
                 date = timezone.now(),
+                created_at = timezone.now(),
                 description = payload.get("description")
             )
             logger.info(f"New Expense created successfully for user: {user}")
@@ -47,8 +48,8 @@ class Expense(models.Model):
     amount = models.DecimalField(max_digits=10, decimal_places=2)
     date = models.DateField()
     description = models.TextField(blank=True)
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
+    created_at = models.DateTimeField(null=True, blank=True)
+    updated_at = models.DateTimeField(null=True, blank=True)
 
     objects = ExpenseManager()
 
@@ -58,7 +59,7 @@ class Expense(models.Model):
         db_table = "expense"
 
     def __str__(self) -> str:
-        return f"{self.id}"
+        return f"[{self.date}] {self.category or 'General'}: {self.amount}"
 
     def save(self, *args, **kwargs):
         if not self.id:
@@ -68,8 +69,8 @@ class Expense(models.Model):
     @property
     def response_data(self) -> dict:
         return {
-            "category": self.category.name,
+            "category": self.category.name if self.category else "N/A",
             "amount": self.amount,
             "created_by": self.user.username,
-            "created_at": self.created_at.strftime("%Y-%m-%d %H:%M:%S")
+            "created_at": self.created_at.strftime("%Y-%m-%d %H:%M:%S") if self.created_at else None
         }

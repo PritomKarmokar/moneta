@@ -21,7 +21,7 @@ class CreateExpenseAPIView(APIView):
     serializer_class = CreateExpenseSerializer
 
     def post(self, request: Request) -> Response:
-        serializer = CreateExpenseSerializer(
+        serializer = self.serializer_class(
             data=request.data,
             context={"request": request}
         )

@@ -33,20 +33,35 @@ class CategoryAdmin(admin.ModelAdmin):
 
 @admin.register(Expense)
 class ExpenseAdmin(admin.ModelAdmin):
+    readonly_fields = ("id",)
+    fields = (
+        "id",
+        "user",
+        "category",
+        "amount",
+        "date",
+        "description",
+        "created_at",
+        "updated_at",
+    )
     list_display = (
         'id',
         'user',
         'category',
         'amount',
         'date',
+        'created_at',
     )
     search_fields = (
         'id',
-        'user',
-        'category',
+        'user__username',
+        'category__name',
     )
     list_filter = (
         'user',
         'category',
     )
-    ordering = ('user','category')
+    ordering = (
+        'created_at',
+        'user',
+    )
