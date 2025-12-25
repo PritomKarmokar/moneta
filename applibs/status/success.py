@@ -45,3 +45,8 @@ CATEGORY_OBJECT_DELETED_SUCCESSFULLY = {
     "message": "Category Object Deleted Successfully",
     "lang": "en"
 }
+EXPENSE_OBJECT_CREATED_SUCCESSFULLY = {
+    "code": "MONETA_EOC_201",
+    "message": "New Expense Object Created Successfully",
+    "lang": "en"
+}

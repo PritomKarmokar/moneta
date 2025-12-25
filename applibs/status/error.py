@@ -28,6 +28,12 @@ USER_ALREADY_EXISTS = {
     "lang": "en",
 }
 
+CATEGORY_NOT_EXISTS = {
+    "code": "MONETA_CDNE_404",
+    "message": "Category not found. Please check the category and try again.",
+    "lang": "en",
+}
+
 INVALID_EMAIL_FORMAT = {
     "code": "MONETA_IEF_400",
     "message": "The provided email is not in valid format.",
@@ -46,6 +52,11 @@ CATEGORY_OBJECT_CREATION_FAILED = {
     "lang": "en"
 }
 
+EXPENSE_OBJECT_CREATION_FAILED = {
+    "code": "MONETA_EOC_400",
+    "message": "Failed to Create New Expense.",
+    "lang": "en"
+}
 
 CATEGORY_OBJECT_UPDATE_FAILED = {
     "code": "MONETA_COCF_400",
@@ -56,4 +67,5 @@ CATEGORY_OBJECT_UPDATE_FAILED = {
 VALIDATION_ERROR_DICT = {
     "UAE_403": USER_ALREADY_EXISTS,
     "IEF_403": INVALID_EMAIL_FORMAT,
+    "CDNE_404": CATEGORY_NOT_EXISTS,
 }

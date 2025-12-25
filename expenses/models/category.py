@@ -1,5 +1,5 @@
 import ulid
-from typing import Optional, List
+from typing import Optional
 
 from django.db import models
 from django.conf import settings
@@ -89,7 +89,10 @@ class Category(models.Model):
             "updated_at": self.updated_at.strftime("%Y-%m-%d %H:%M:%S")
         }
 
-    def update(self, name: str) -> bool:
+    def update(
+            self,
+            name: str
+    ) -> bool:
         try:
             self.name = name
             self.updated_at = timezone.now()
