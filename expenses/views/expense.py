@@ -21,7 +21,10 @@ class CreateExpenseAPIView(APIView):
     serializer_class = CreateExpenseSerializer
 
     def post(self, request: Request) -> Response:
-        serializer = self.serializer_class(data=request.data)
+        serializer = CreateExpenseSerializer(
+            data=request.data,
+            context={"request": request}
+        )
         if not serializer.is_valid():
             errors = serializer.errors
             logger.error("Serializer errors: %s", errors)

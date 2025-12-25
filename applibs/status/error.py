@@ -30,7 +30,7 @@ USER_ALREADY_EXISTS = {
 
 CATEGORY_NOT_EXISTS = {
     "code": "MONETA_CDNE_404",
-    "message": "Category not found. Please check the category and try again.",
+    "message": "This Category not found. Either create this category or Please check the category and try again.",
     "lang": "en",
 }
 

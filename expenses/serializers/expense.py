@@ -8,16 +8,18 @@ class CreateExpenseSerializer(serializers.Serializer):
     description = serializers.CharField(max_length=255)
 
     def validate_category(self, value):
-        request = self.context.get('request')
+        request = self.context["request"]
         user = request.user
 
-        if not Category.objects.filter(
+        category = Category.objects.filter(
             name__iexact=value,
             user=user
-        ).exists():
+        ).first()
+
+        if not category:
             raise serializers.ValidationError(
-                detail="Category does not exist for this user",
+                detail="This Category Type does not exist for this user",
                 code="CDNE_404"
             )
 
-        return value
+        return category
