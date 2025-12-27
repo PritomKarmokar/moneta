@@ -4,7 +4,7 @@ from typing import Optional
 from django.db import models
 from django.conf import settings
 from django.utils import timezone
-from django.db.models import QuerySet
+from django.db.models import QuerySet, F
 from django.contrib.auth.base_user import AbstractBaseUser
 
 from .category import Category
@@ -37,9 +37,34 @@ class ExpenseManager(models.Manager):
         self,
         user: AbstractBaseUser
     ) -> QuerySet["Expense"]:
-        expenses = self.filter(user=user, is_deleted=False)
+        expenses = self.filter(
+            user=user,
+            is_deleted=False
+        ).order_by('-date')
+
         logger.info(f"Fetching all available expenses for username '{user.username}'")
         return expenses
+
+    # note: If you omit the 'ExpenseListSerializer' can try this db query
+    # def fetch_all_expenses(
+    #     self,
+    #     user: AbstractBaseUser
+    # ) -> QuerySet["Expense"]:
+    #     queryset = (
+    #         self.filter(
+    #             user=user,
+    #             is_deleted=False
+    #         ).order_by('-date')
+    #     )
+    #     logger.info(f"Fetching all available expenses for username '{user.username}'")
+    #     return queryset.annotate(
+    #         category_name=F('category__name')
+    #     ).values(
+    #         "category_name",
+    #         "amount",
+    #         "description",
+    #         "date"
+    #     )
 
     def fetch_expense(
             self,

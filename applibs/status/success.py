@@ -47,13 +47,19 @@ EXPENSE_OBJECT_CREATED_SUCCESSFULLY = {
 }
 
 EXPENSE_OBJECT_UPDATED_SUCCESSFULLY = {
-    "code": "MONETA_COUS_200",
+    "code": "MONETA_EOUS_200",
     "message": "Expense Object Updated Successfully",
     "lang": "en",
 }
 
 EXPENSE_OBJECT_DELETED_SUCCESSFULLY = {
-    "code": "MONETA_COD_204",
+    "code": "MONETA_EODS_200",
     "message": "Expense Object Deleted Successfully",
+    "lang": "en"
+}
+
+EXPENSE_LIST_FETCHED_SUCCESSFULLY = {
+    "code": "MONETA_ELFS_200",
+    "message": "Expense Object List Fetched Successfully",
     "lang": "en"
 }

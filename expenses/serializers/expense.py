@@ -58,3 +58,10 @@ class UpdateExpenseSerializer(serializers.Serializer):
             )
 
         return attrs
+
+class ExpenseListSerializer(serializers.Serializer):
+    id = serializers.CharField(max_length=26)
+    category = serializers.CharField(max_length=50)
+    amount = serializers.CharField(max_length=20)
+    description = serializers.CharField(max_length=255)
+    date = serializers.DateField(format="%d-%m-%Y")

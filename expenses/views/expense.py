@@ -5,6 +5,7 @@ from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
 
 from applibs.logger import get_logger
+from applibs.pagination import CustomPagination
 from applibs.helper import format_output_success, render_serializer_error
 from applibs.status import (
     VALID_DATA_NOT_FOUND,
@@ -13,10 +14,14 @@ from applibs.status import (
     EXPENSE_OBJECT_CREATION_FAILED,
     EXPENSE_OBJECT_CREATED_SUCCESSFULLY,
     EXPENSE_OBJECT_UPDATED_SUCCESSFULLY,
+    EXPENSE_LIST_FETCHED_SUCCESSFULLY,
     EXPENSE_OBJECT_DELETED_SUCCESSFULLY
 )
 from expenses.models import Expense
-from expenses.serializers import CreateExpenseSerializer
+from expenses.serializers import (
+    ExpenseListSerializer,
+    CreateExpenseSerializer,
+)
 
 logger = get_logger(__name__)
 
@@ -86,5 +91,36 @@ class DeleteExpenseAPIView(APIView):
         return Response(EXPENSE_OBJECT_DELETED_SUCCESSFULLY, status=status.HTTP_204_NO_CONTENT)
 
 class ExpenseListAPIView(APIView):
-    # todo: add pagination, add summary (sum of expense amount) like features
-    pass
+    permission_classes = [IsAuthenticated]
+    serializer_class = ExpenseListSerializer
+    pagination_class = CustomPagination
+
+    def get(self, request: Request) -> Response:
+        user = request.user
+        paginator = self.pagination_class()
+
+        queryset = Expense.objects.fetch_all_expenses(user=user)
+        page = paginator.paginate_queryset(queryset, request)
+
+        serializer = self.serializer_class(page, many=True)
+        result = paginator.get_paginated_response(serializer.data)
+
+        return Response(
+            format_output_success(EXPENSE_LIST_FETCHED_SUCCESSFULLY, result.data),
+            status=status.HTTP_200_OK
+        )
+
+    # note: in case you the 'ExpenseList Serializer'
+    # def get(self, request: Request) -> Response:
+    #     user = request.user
+    #     paginator = self.pagination_class()
+    #
+    #     queryset = Expense.objects.fetch_all_expenses(user=user)
+    #     page = paginator.paginate_queryset(list(queryset), request)
+    #
+    #     result = paginator.get_paginated_response(page)
+    #
+    #     return Response(
+    #         format_output_success(EXPENSE_LIST_FETCHED_SUCCESSFULLY, result.data),
+    #         status=status.HTTP_200_OK
+    #     )
