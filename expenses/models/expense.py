@@ -37,7 +37,7 @@ class ExpenseManager(models.Manager):
         self,
         user: AbstractBaseUser
     ) -> QuerySet["Expense"]:
-        expenses = self.filter(user=user)
+        expenses = self.filter(user=user, is_deleted=False)
         logger.info(f"Fetching all available expenses for username '{user.username}'")
         return expenses
 
@@ -50,7 +50,7 @@ class Expense(models.Model):
     description = models.TextField(blank=True)
     created_at = models.DateTimeField(null=True, blank=True)
     updated_at = models.DateTimeField(null=True, blank=True)
-
+    is_deleted = models.BooleanField(default=False)
     objects = ExpenseManager()
 
     class Meta:
