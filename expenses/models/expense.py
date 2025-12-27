@@ -120,3 +120,9 @@ class Expense(models.Model):
         except Exception as e:
             logger.error(f"Error updating expense object: {e}")
             return False
+
+    def delete_object(self) -> bool:
+        self.is_deleted = True
+        self.save()
+        logger.info(f"Expense object with id: {self.id} deleted successfully")
+        return True

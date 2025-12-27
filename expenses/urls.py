@@ -5,7 +5,8 @@ from .views import (
     CreateCategoryAPIView,
     DeleteCategoryAPIView,
     CategoryListAPIView,
-    CreateExpenseAPIView
+    CreateExpenseAPIView,
+    UpdateExpenseAPIView,
 )
 
 api_prefix = "api/v1"
@@ -17,5 +18,6 @@ urlpatterns = [
     path(f'{api_prefix}/category/list/', CategoryListAPIView.as_view(), name='category_list'),
 
     path(f'{api_prefix}/create/expense/', CreateExpenseAPIView.as_view(), name='create_new_expense'),
+    path(f'{api_prefix}/update/expense/', UpdateExpenseAPIView.as_view(), name='update_new_expense'),
 
 ]

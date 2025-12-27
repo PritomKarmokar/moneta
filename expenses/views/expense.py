@@ -12,7 +12,8 @@ from applibs.status import (
     EXPENSE_OBJECT_UPDATE_FAILED,
     EXPENSE_OBJECT_CREATION_FAILED,
     EXPENSE_OBJECT_CREATED_SUCCESSFULLY,
-    EXPENSE_OBJECT_UPDATED_SUCCESSFULLY
+    EXPENSE_OBJECT_UPDATED_SUCCESSFULLY,
+    EXPENSE_OBJECT_DELETED_SUCCESSFULLY
 )
 from expenses.models import Expense
 from expenses.serializers import CreateExpenseSerializer
@@ -70,3 +71,20 @@ class UpdateExpenseAPIView(APIView):
             return Response(EXPENSE_OBJECT_UPDATE_FAILED, status=status.HTTP_400_BAD_REQUEST)
 
         return Response(format_output_success(EXPENSE_OBJECT_UPDATED_SUCCESSFULLY, expense_obj.updated_response_data), status=status.HTTP_200_OK)
+
+class DeleteExpenseAPIView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def delete(self, request: Request, expense_id: str) -> Response:
+        user = request.user
+        expense_obj = Expense.objects.fetch_expense(expense_id=expense_id, user=user)
+        if not expense_obj:
+            logger.error(f"Expense {expense_id} not found for user {user.username}")
+            return Response(NO_EXPENSE_OBJECT_FOUND, status=status.HTTP_404_NOT_FOUND)
+
+        expense_obj.delete_object()
+        return Response(EXPENSE_OBJECT_DELETED_SUCCESSFULLY, status=status.HTTP_204_NO_CONTENT)
+
+class ExpenseListAPIView(APIView):
+    # todo: add pagination, add summary (sum of expense amount) like features
+    pass
