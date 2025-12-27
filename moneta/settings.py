@@ -32,6 +32,7 @@ DJANGO_APPS = [
 # Third party apps
 THIRD_PARTY_APPS = [
     'rest_framework',
+    'django_extensions',
     'corsheaders',
     'cid.apps.CidAppConfig',
     'rest_framework_simplejwt',

@@ -10,7 +10,7 @@ urlpatterns = [
     re_path(settings.STATIC_URL[1:] + r"(?P<path>.*)$", serve, {"document_root": settings.STATIC_ROOT}),
     path(f'{service_name}/admin/', admin.site.urls),
     path(f'{service_name}/user/', include('users.urls')),
-    path(f'{service_name}/expense/', include('expenses.urls')),
+    path(f'{service_name}/expenses/', include('expenses.urls')),
 ]
 
 

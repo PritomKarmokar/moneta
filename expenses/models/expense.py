@@ -141,6 +141,7 @@ class Expense(models.Model):
 
             self.updated_at = timezone.now()
             self.save()
+            logger.info(f"Expense object with id: {self.id} updated successfully")
             return True
         except Exception as e:
             logger.error(f"Error updating expense object: {e}")

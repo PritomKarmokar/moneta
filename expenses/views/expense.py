@@ -21,6 +21,7 @@ from expenses.models import Expense
 from expenses.serializers import (
     ExpenseListSerializer,
     CreateExpenseSerializer,
+    UpdateExpenseSerializer,
 )
 
 logger = get_logger(__name__)
@@ -50,7 +51,7 @@ class CreateExpenseAPIView(APIView):
 
 class UpdateExpenseAPIView(APIView):
     permission_classes = [IsAuthenticated]
-    serializer_class = CreateExpenseSerializer
+    serializer_class = UpdateExpenseSerializer
 
     def patch(self, request: Request, expense_id: str) -> Response:
         serializer = self.serializer_class(
