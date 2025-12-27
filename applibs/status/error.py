@@ -64,8 +64,33 @@ CATEGORY_OBJECT_UPDATE_FAILED = {
     "lang": "en"
 }
 
+EXPENSE_OBJECT_UPDATE_FAILED = {
+    "code": "MONETA_COCF_400",
+    "message": "Failed to Update the existing Expense.",
+    "lang": "en"
+}
+
+NO_CATEGORIES_FOUND = {
+    "code": "MONETA_NCF_204",
+    "message": "No Categories Found",
+    "lang": "en"
+}
+
+EXPENSE_UPDATE_NO_FIELDS_PROVIDED = {
+    "code": "MONETA_EUNFP_400",
+    "message": "Please provide at least one of: category, amount, or description to update the expense.",
+    "lang": "en"
+}
+
+NO_EXPENSE_OBJECT_FOUND = {
+    "code": "MONETA_NEOF_404",
+    "message": "No Expense Object Found",
+    "lang": "en"
+}
+
 VALIDATION_ERROR_DICT = {
     "UAE_403": USER_ALREADY_EXISTS,
     "IEF_403": INVALID_EMAIL_FORMAT,
     "CDNE_404": CATEGORY_NOT_EXISTS,
+    "EUNFP_400": EXPENSE_UPDATE_NO_FIELDS_PROVIDED,
 }

@@ -102,7 +102,7 @@ class DeleteCategoryAPIView(APIView):
 
     def delete(self, request: Request, category_id: str) -> Response:
         user = request.user
-        category_obj = Category.objects.filter(id=category_id, user=user).first()
+        category_obj = Category.objects.fetch_category(id=category_id, user=user)
         if not category_obj:
             logger.error(f"Category {category_id} not found for user {user.username}")
             return Response(NO_CATEGORIES_FOUND, status=status.HTTP_404_NOT_FOUND)

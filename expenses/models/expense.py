@@ -41,6 +41,19 @@ class ExpenseManager(models.Manager):
         logger.info(f"Fetching all available expenses for username '{user.username}'")
         return expenses
 
+    def fetch_expense(
+            self,
+            expense_id: str,
+            user: AbstractBaseUser
+    ) -> Optional["Expense"]:
+        try:
+            expense = self.get(id=expense_id, user=user, is_deleted=False)
+            logger.info(f"Expense object fetched successfully for user: {user.username} with id: {expense_id}")
+            return expense
+        except Exception as e:
+            logger.error(f"Error fetching expense object: {e}")
+            return None
+
 class Expense(models.Model):
     id = models.CharField(max_length=26, primary_key=True, editable=False)
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
@@ -71,6 +84,39 @@ class Expense(models.Model):
         return {
             "category": self.category.name if self.category else "N/A",
             "amount": self.amount,
+            "description": self.description if self.description else "N/A",
             "created_by": self.user.username,
             "created_at": self.created_at.strftime("%Y-%m-%d %H:%M:%S") if self.created_at else None
         }
+
+    @property
+    def updated_response_data(self) -> dict:
+        return {
+            "category": self.category.name,
+            "amount": self.amount,
+            "description": self.description if self.description else "N/A",
+            "updated_at": self.updated_at.strftime("%Y-%m-%d %H:%M:%S")
+        }
+
+    def update(
+            self,
+            payload: dict
+    ) -> bool:
+        try:
+            category = payload.get("category", None)
+            amount = payload.get("amount", None)
+            description = payload.get("description", None)
+
+            if category:
+                self.category = category
+            if amount:
+                self.amount = amount
+            if description:
+                self.description = description
+
+            self.updated_at = timezone.now()
+            self.save()
+            return True
+        except Exception as e:
+            logger.error(f"Error updating expense object: {e}")
+            return False

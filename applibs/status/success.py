@@ -34,12 +34,6 @@ CATEGORY_OBJECT_UPDATED_SUCCESSFULLY = {
     "lang": "en",
 }
 
-NO_CATEGORIES_FOUND = {
-    "code": "MONETA_NCF_204",
-    "message": "No Categories Found",
-    "lang": "en"
-}
-
 CATEGORY_OBJECT_DELETED_SUCCESSFULLY = {
     "code": "MONETA_COD_204",
     "message": "Category Object Deleted Successfully",
@@ -49,4 +43,10 @@ EXPENSE_OBJECT_CREATED_SUCCESSFULLY = {
     "code": "MONETA_EOC_201",
     "message": "New Expense Object Created Successfully",
     "lang": "en"
+}
+
+EXPENSE_OBJECT_UPDATED_SUCCESSFULLY = {
+    "code": "MONETA_COUS_200",
+    "message": "Expense Object Updated Successfully",
+    "lang": "en",
 }
